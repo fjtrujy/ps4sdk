@@ -25,6 +25,6 @@ script:
     - cp -frv lib $PS4DEV
     - cp crt0.s $PS4DEV
     - cp linker.x $PS4DEV
-    - echo Finished!"
+    - echo Finished!
 
 after_success:
