@@ -4,8 +4,7 @@ osx_image: xcode11.4
 
 env:
   global:
-    - LC_CTYPE=en_US.UTF-8
-    - LANG=en_US.UTF-8
+    - PROC_NR=$(getconf _NPROCESSORS_ONLN)
     - PS4DEV=./ps4dev
     - PS4SDK=$TRAVIS_BUILD_DIR
 
@@ -17,7 +16,7 @@ script:
     - set -o pipefail
 
     - echo Starting make
-    - make
+    - make -j $PROC_NR
     - echo Compilation Finished!
 
     - echo Starting "install"
