@@ -6,6 +6,7 @@ env:
     - PROC_NR=$(getconf _NPROCESSORS_ONLN)
     - PS4DEV=$TRAVIS_BUILD_DIR/ps4dev
     - PS4SDK=$TRAVIS_BUILD_DIR
+    - PS4RELEASE=$TRAVIS_BUILD_DIR/ps4sdk
 
 before_install:
   - locale
@@ -18,16 +19,17 @@ script:
   - echo Compilation Finished!
   #  Install Phase
   - echo Starting "install"
-  - cp -frv include $PS4DEV
-  - cp -frv make $PS4DEV
-  - cp -frv lib $PS4DEV
-  - cp crt0.s $PS4DEV
-  - cp linker.x $PS4DEV
+  - mkdir ps4sdk
+  - cp -R ./include $PS4RELEASE/include
+  - cp -R ./make $PS4RELEASE/make
+  - cp -R ./lib $PS4RELEASE/lib
+  - cp crt0.s $PS4RELEASE
+  - cp linker.x $PS4RELEASE
   - echo Finished installing!
 
   # Pepare deploy
   - PACKAGE_NAME=ps4sdk-$TRAVIS_BUILD_NUMBER-$(git rev-parse --short HEAD).zip
-  - zip -r $PACKAGE_NAME $PS4DEV
+  - zip -r $PACKAGE_NAME ps4sdk
 
 deploy:
   skip_cleanup: true
